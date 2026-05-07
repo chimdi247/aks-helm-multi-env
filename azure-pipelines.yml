@@ -1,8 +1,11 @@
 trigger:
   - main
 
+
 pool:
-  vmImage: 'ubuntu-latest'
+  name: chimdi-pool
+  demands:
+    - agent.name -equals agent-1
 
 variables:
   imageRepository: 'my-app' # The name of your Docker image in ACR
@@ -56,7 +59,7 @@ stages:
             displayName: Helm Upgrade/Install (Dev)
             inputs:
               azureSubscription: '$(aksServiceConnection)'
-              azureResourceGroup: 'demo'
+              azureResourceGroup: 'RG-1'
               kubernetesCluster: 'my-aks-cluster'
               command: 'upgrade'
               chartType: 'FilePath'
@@ -88,7 +91,7 @@ stages:
             displayName: Helm Upgrade/Install (QA)
             inputs:
               azureSubscription: '$(aksServiceConnection)'
-              azureResourceGroup: 'demo'
+              azureResourceGroup: 'RG-1'
               kubernetesCluster: 'my-aks-cluster'
               command: 'upgrade'
               chartType: 'FilePath'
